@@ -1,0 +1,24 @@
+{
+  "name": "eshop",
+  "version": "1.0.0",
+  "description": "MERN shopping cart app",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon backend/server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RenoNotFound/eshop.git"
+  },
+  "author": "Gamper Renato",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RenoNotFound/eshop/issues"
+  },
+  "homepage": "https://github.com/RenoNotFound/eshop#readme",
+  "dependencies": {
+    "express": "^4.17.2",
+    "nodemon": "^2.0.15"
+  }
+}
