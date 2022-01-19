@@ -2,12 +2,14 @@ main {
   min-height: 80vh;
 }
 
-.card a {
+.card a,
+.cart-items a {
   text-decoration: none;
   color: rgb(51, 51, 51);
 }
 
-.card a:hover {
+.card a:hover,
+.cart-items a:hover {
   color: rgba(51, 51, 51, 0.5);
 }
 

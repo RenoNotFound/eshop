@@ -14,9 +14,10 @@ import Rating from "../components/Rating";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import { listProductDetails } from "../actions/productActions";
+import { addToCart } from "../actions/cartActions";
 
 const ProductScreen = () => {
-  const [qty, setQty] = useState(0);
+  const [qty, setQty] = useState(1);
 
   const dispatch = useDispatch();
   const productDetails = useSelector((state) => state.productDetails);
@@ -27,6 +28,10 @@ const ProductScreen = () => {
   useEffect(() => {
     dispatch(listProductDetails(id));
   }, [dispatch, id]);
+
+  const addToCartHandler = () => {
+    dispatch(addToCart(id, qty));
+  };
 
   return (
     <>
@@ -111,6 +116,7 @@ const ProductScreen = () => {
                     type="button"
                     size="lg"
                     disabled={product.countInStock === 0}
+                    onClick={addToCartHandler}
                   >
                     Add To Cart
                   </Button>
