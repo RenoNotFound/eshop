@@ -51,7 +51,7 @@ const LoginScreen = () => {
           ></Form.Control>
         </Form.Group>
 
-        <Button type="submit" variant="primary" className="my-2">
+        <Button type="submit" variant="primary" className="my-2 btn-dark">
           {loading ? (
             <Loader loaderWidth="20px" loaderHeight="20px" />
           ) : (
