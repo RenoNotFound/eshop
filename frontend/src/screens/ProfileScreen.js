@@ -4,7 +4,11 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
-import { getUserProfileDetails } from "../actions/userActions";
+import {
+  getUserProfileDetails,
+  updateUserProfile,
+} from "../actions/userActions";
+import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants";
 
 const ProfileScreen = () => {
   const [name, setName] = useState("");
@@ -15,36 +19,41 @@ const ProfileScreen = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const userDetails = useSelector((state) => state.userDetails);
   const { loading, error, user } = userDetails;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
+  const { success } = userUpdateProfile;
+
   useEffect(() => {
     if (!userInfo) {
       navigate("/");
     } else {
-      if (!user.name) {
+      if (!user.name || success) {
+        dispatch({ type: USER_UPDATE_PROFILE_RESET });
         dispatch(getUserProfileDetails());
       } else {
         setName(user.name);
         setEmail(user.email);
       }
     }
-  }, [dispatch, navigate, userInfo, user]);
+  }, [dispatch, navigate, userInfo, user, success]);
 
   const submitHandler = (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       setMessage("Passwords don't match");
     } else {
-      //   dispatch(signup(name, email, password));
+      dispatch(updateUserProfile({ id: user._id, name, email, password }));
     }
   };
 
   return (
-    <Row className="py-3">
+    <Row className="pt-3">
       <Col md={3}>
         <Form onSubmit={submitHandler} className="text-center">
           <h2>User Profile</h2>
@@ -98,6 +107,9 @@ const ProfileScreen = () => {
           </Button>
           {message && <Message variant="danger">{message}</Message>}
           {error && <Message variant="danger">{error}</Message>}
+          {success && (
+            <Message variant="success">Profile updated successfully!</Message>
+          )}
         </Form>
       </Col>
       <Col md={9}>
