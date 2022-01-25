@@ -4,7 +4,7 @@ const Done = ({ isDone }) => {
   return (
     <>
       {isDone === "done" ? (
-        <i style={{ color: "green" }} class="fas fa-check-circle"></i>
+        <i style={{ color: "green" }} className="fas fa-check-circle"></i>
       ) : (
         <></>
       )}

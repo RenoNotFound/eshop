@@ -20,13 +20,12 @@ const PaymentScreen = () => {
 
   useEffect(() => {
     if (!userInfo) navigate("/login");
-
     if (!shippingAddress) navigate("/shipping");
   }, [dispatch, navigate, userInfo, shippingAddress]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(savePaymentMethod({ paymentMethod }));
+    dispatch(savePaymentMethod({ method: paymentMethod }));
     navigate("/placeorder");
   };
 

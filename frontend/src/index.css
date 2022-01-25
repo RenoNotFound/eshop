@@ -4,14 +4,16 @@ main {
 
 .card a,
 .cart-items a,
-.nav-item > a {
+.nav-item > a,
+.cart-items-container a {
   text-decoration: none;
   color: rgb(51, 51, 51);
 }
 
 .card a:hover,
 .cart-items a:hover,
-.nav-item > a:hover {
+.nav-item > a:hover,
+.cart-items-container a:hover {
   color: rgba(51, 51, 51, 0.5);
 }
 
