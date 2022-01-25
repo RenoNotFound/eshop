@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -14,6 +15,7 @@ import Message from "../components/Message";
 import { addToCart, removeFromCart } from "../actions/cartActions";
 
 const CartScreen = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
@@ -23,7 +25,7 @@ const CartScreen = () => {
   };
 
   const checkoutHandler = () => {
-    console.log("checkout");
+    navigate("/shipping");
   };
 
   return (
