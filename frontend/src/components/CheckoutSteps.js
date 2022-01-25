@@ -1,6 +1,7 @@
 import React from "react";
 import { Nav } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
+import Done from "./Done";
 
 const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
   return (
@@ -11,7 +12,7 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
             <LinkContainer to="/login" className="px-2">
               <Nav.Link>Sign In</Nav.Link>
             </LinkContainer>
-            <i style={{ color: "green" }} class="fas fa-check-circle"></i>
+            <Done isDone={step1} />
           </>
         ) : (
           <Nav.Link disabled>Sign In</Nav.Link>
@@ -24,7 +25,7 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
             <LinkContainer to="/shipping" className="px-2">
               <Nav.Link>Shipping</Nav.Link>
             </LinkContainer>
-            <i style={{ color: "green" }} class="fas fa-check-circle"></i>
+            <Done isDone={step2} />
           </>
         ) : (
           <Nav.Link disabled>Shipping</Nav.Link>
@@ -37,7 +38,7 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
             <LinkContainer to="/payment" className="px-2">
               <Nav.Link>Payment</Nav.Link>
             </LinkContainer>
-            <i style={{ color: "green" }} class="fas fa-check-circle"></i>
+            <Done isDone={step3} />
           </>
         ) : (
           <Nav.Link disabled>Payment</Nav.Link>
@@ -50,7 +51,7 @@ const CheckoutSteps = ({ step1, step2, step3, step4 }) => {
             <LinkContainer to="/placeorder" className="px-2">
               <Nav.Link>Place Order</Nav.Link>
             </LinkContainer>
-            <i style={{ color: "green" }} class="fas fa-check-circle"></i>
+            <Done isDone={step4} />
           </>
         ) : (
           <Nav.Link disabled>Place Order</Nav.Link>
