@@ -5,6 +5,7 @@ import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import CheckoutSteps from "../components/CheckoutSteps";
+import { createOrder } from "../actions/orderActions";
 
 const PlaceOrderScreen = () => {
   const navigate = useNavigate();
@@ -16,15 +17,24 @@ const PlaceOrderScreen = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  const orderCreate = useSelector((state) => state.orderCreate);
+  const { order, success, error } = orderCreate;
+
   useEffect(() => {
     if (!userInfo) navigate("/login");
     if (!shippingAddress) navigate("/shipping");
     if (!paymentMethod.method) navigate("/payment");
-  }, [dispatch, navigate, userInfo, shippingAddress, paymentMethod]);
 
-  const placeOrderHandler = () => {
-    console.log("order");
-  };
+    if (success) navigate(`/order/${order._id}`);
+  }, [
+    dispatch,
+    navigate,
+    userInfo,
+    shippingAddress,
+    paymentMethod,
+    success,
+    order,
+  ]);
 
   // Calculate prices
   const addDecimals = (num) => {
@@ -39,6 +49,20 @@ const PlaceOrderScreen = () => {
   cart.totalPrice = addDecimals(
     Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)
   );
+
+  const placeOrderHandler = () => {
+    dispatch(
+      createOrder({
+        orderItems: cartItems,
+        shippingAddress: shippingAddress,
+        paymentMethod: paymentMethod.method,
+        itemsPrice: cart.itemsPrice,
+        shippingPrice: cart.shippingPrice,
+        taxPrice: cart.taxPrice,
+        totalPrice: cart.totalPrice,
+      })
+    );
+  };
 
   return (
     <>
@@ -133,6 +157,12 @@ const PlaceOrderScreen = () => {
                   <Col>${cart.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
+
+              {error && (
+                <ListGroup.Item className="text-center">
+                  <Message variant="danger">{error}</Message>
+                </ListGroup.Item>
+              )}
 
               <ListGroup.Item className="text-center">
                 <Button
