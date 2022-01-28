@@ -3,11 +3,12 @@ import axios from "axios";
 import Moment from "react-moment";
 import { PayPalButton } from "react-paypal-button-v2";
 import { useParams, Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
+import CheckoutSteps from "../components/CheckoutSteps";
 import { getOrderDetails, payOrder } from "../actions/orderActions";
 import { ORDER_PAY_RESET } from "../constants/orderConstants";
 
@@ -16,6 +17,7 @@ const OrderScreen = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { state } = useLocation();
 
   const { id: orderId } = useParams();
 
@@ -53,7 +55,6 @@ const OrderScreen = () => {
   }, [dispatch, navigate, userInfo, order, orderId, successPay]);
 
   const successPaymentHandler = (paymentResult) => {
-    console.log(paymentResult);
     dispatch(payOrder(orderId, paymentResult));
   };
 
@@ -63,6 +64,17 @@ const OrderScreen = () => {
     <Message variant="danger">{error}</Message>
   ) : (
     <>
+      {state && state.prevLocation === "/placeorder" ? (
+        <CheckoutSteps
+          step1="done"
+          step2="done"
+          step3="done"
+          step4="done"
+          disabled
+        />
+      ) : (
+        <></>
+      )}
       <h1>Order {order._id}</h1>
       <Row>
         <Col md={8}>
