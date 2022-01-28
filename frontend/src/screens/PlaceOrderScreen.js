@@ -1,15 +1,17 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Button, Row, Col, ListGroup, Image, Card } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import CheckoutSteps from "../components/CheckoutSteps";
 import { createOrder } from "../actions/orderActions";
+import { CART_RESET } from "../constants/cartConstants";
 
 const PlaceOrderScreen = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const cart = useSelector((state) => state.cart);
   const { shippingAddress, paymentMethod, cartItems } = cart;
@@ -25,10 +27,16 @@ const PlaceOrderScreen = () => {
     if (!shippingAddress) navigate("/shipping");
     if (!paymentMethod.method) navigate("/payment");
 
-    if (success) navigate(`/order/${order._id}`);
+    if (success) {
+      navigate(`/order/${order._id}`, {
+        state: { prevLocation: location.pathname },
+      });
+      dispatch({ type: CART_RESET });
+    }
   }, [
     dispatch,
     navigate,
+    location,
     userInfo,
     shippingAddress,
     paymentMethod,
