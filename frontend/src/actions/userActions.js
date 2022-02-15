@@ -17,6 +17,7 @@ import {
   USER_LIST_REQUEST,
   USER_LIST_SUCCESS,
   USER_LIST_FAIL,
+  USER_LIST_RESET,
 } from "../constants/userConstants";
 import { ORDER_MY_ORDERS_RESET } from "../constants/orderConstants";
 import { CART_RESET } from "../constants/cartConstants";
@@ -60,6 +61,7 @@ export const logout = () => async (dispatch) => {
   dispatch({ type: USER_DETAILS_RESET });
   dispatch({ type: ORDER_MY_ORDERS_RESET });
   dispatch({ type: CART_RESET });
+  dispatch({ type: USER_LIST_RESET });
 };
 
 export const signup = (name, email, password) => async (dispatch) => {
